@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import Header from "@/components/Header";
 
 import { Poppins } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
@@ -11,6 +12,7 @@ export default function App({
   return (
     <main className={`${inter.className}`}>
       <SessionProvider session={session}>
+        <Header/>
         <Component {...pageProps} />
       </SessionProvider>
     </main>
