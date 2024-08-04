@@ -10,7 +10,7 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   return (
-    <main className={`${inter.className}`}>
+    <main className={`px-4 ${inter.className}`}>
       <SessionProvider session={session}>
         <Header/>
         <Component {...pageProps} />
