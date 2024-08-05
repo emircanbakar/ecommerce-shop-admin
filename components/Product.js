@@ -1,13 +1,28 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
+import axios from "axios";
 
 export default function Product() {
+  const [redirect, setRedirect] = useState(false);
+  const router = useRouter();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [images, setImages] = useState([]);
 
-  function createProduct() {
-    
+  async function createProduct(e) {
+    e.preventDefault();
+
+    const data = { title, description, price };
+    await axios.post('/api/products', data);
+
+    setRedirect(true);
+  }
+
+  if (redirect) {
+    router.push('/products');
+    return null;
   }
 
   return (

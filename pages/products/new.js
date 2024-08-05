@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Product from "../../components/Product"
 
 export default function New() {
