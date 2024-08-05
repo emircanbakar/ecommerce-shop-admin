@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import axios from "axios";
+import Spinner from "./Spinner";
+import { ReactSortable } from "react-sortablejs";
 
 export default function Product() {
   const [redirect, setRedirect] = useState(false);
@@ -10,28 +12,66 @@ export default function Product() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [images, setImages] = useState([]);
+  const [isUploading, setIsUploading] = useState(false);
 
+  const uploadImageQueue = [];
   async function createProduct(e) {
     e.preventDefault();
 
-    const data = { title, description, price };
-    await axios.post('/api/products', data);
+    if (isUploading) {
+      await Promise.all(uploadImageQueue);
+    }
+
+    const data = { title, description, price, images };
+    await axios.post("/api/products", data);
 
     setRedirect(true);
   }
 
+  async function uploadImages(e) {
+    const files = e.target.files;
+    if (files.length > 0) {
+      setIsUploading(true);
+      for (const file of files) {
+        const data = new FormData();
+        data.append("file", file);
+
+        uploadImageQueue.push(
+          axios.post("/api/upload", data).then((res) => {
+            setImages((oldImages) => [...oldImages, ...res.data.links]);
+          })
+        );
+      }
+
+      await Promise.all(uploadImageQueue);
+      setIsUploading(false);
+    } else {
+      return "An error ocurred";
+    }
+  }
+
   if (redirect) {
-    router.push('/products');
+    router.push("/products");
     return null;
+  }
+
+  function updateImagesOrder(Images) {
+    setImages(Images);
+  }
+
+  function handleDeleteImage(index){
+    const updateImages = [...images]
+    updateImages.splice(index, 1)
+    setImages(updateImages)
   }
 
   return (
     <form onSubmit={createProduct} className="mx-auto max-w-screen-sm">
-      <div class="mx-auto p-4">
+      <div className="mx-auto p-4">
         <div>
           <label
             for="example1"
-            class="mb-1 block text-md font-medium text-gray-700 py-2  "
+            className="mb-1 block text-md font-medium text-gray-700 py-2  "
           >
             Title
           </label>
@@ -49,7 +89,7 @@ export default function Product() {
         <div>
           <label
             for="example1"
-            class="mb-1 block text-md font-medium text-gray-700 py-2"
+            className="mb-1 block text-md font-medium text-gray-700 py-2"
           >
             Category
           </label>
@@ -62,11 +102,8 @@ export default function Product() {
       </div>
 
       <div className="mx-auto p-4">
-        <div class="mx-auto">
-          <label
-            for="example1"
-            class="mb-1 block text-md font-medium text-gray-700 py-2"
-          >
+        <div className="mx-auto">
+          <label className="mb-1 block text-md font-medium text-gray-700 py-2">
             Images
           </label>
           <label class="flex w-full cursor-pointer appearance-none items-center justify-center rounded-md border-2 border-dashed border-gray-200 p-6 transition-all hover:border-primary-300">
@@ -87,37 +124,64 @@ export default function Product() {
                   />
                 </svg>
               </div>
-              <div class="text-gray-600">
+              <div className="text-gray-600">
                 <a
                   href="#"
-                  class="font-medium text-primary-500 hover:text-primary-700"
+                  className="font-medium text-primary-500 hover:text-primary-700"
                 >
                   Click to upload
                 </a>{" "}
                 or drag and drop
               </div>
-              <p class="text-sm text-gray-500">
+              <p className="text-sm text-gray-500">
                 SVG, PNG, JPG or GIF (max. 800x400px)
               </p>
             </div>
-            <input id="example5" type="file" class="sr-only" />
+            <input type="file" className="sr-only" onChange={uploadImages} />
           </label>
         </div>
+
+        <div className="grid grid-cols-2 items-center rounded">
+          {isUploading && (
+            <Spinner className="p-4 absolute top-1/2 left-1/2 transform-translate-x-1/2 -translate-y-1/2" />
+          )}
+        </div>
+
+        {!isUploading && (
+          <div className="grid grid-cols-2 gap-4">
+            <ReactSortable
+              list={Array.isArray(images) ? images : []}
+              setList={updateImagesOrder}
+              animation={200}
+              className="grid grid-cols-2 gap-4"
+            >
+              {Array.isArray(images) &&
+                images.map((link, index) => (
+                  <div key={link} className="relative group">
+                    <img
+                      src={link}
+                      alt="image"
+                      className="object-cover h-32 w-44 p-2 rounded-md"
+                    />
+                    <div className="absolute top-2 right-2 cursor-pointer transition-opacity group-hover:opacity-100 opacity-0">
+                        <button onClick={()=> handleDeleteImage(index)} className="p-2 text-center bg-transparent font-bold">X</button>
+                    </div>
+                  </div>
+                ))}
+            </ReactSortable>
+          </div>
+        )}
       </div>
 
       <div className="mx-auto p-4">
         <div>
-          <label
-            for="example1"
-            class="mb-1 block text-md font-medium text-gray-700 py-2"
-          >
+          <label className="mb-1 block text-md font-medium text-gray-700 py-2">
             Description
           </label>
           <textarea
             type="text"
             rows={4}
-            id="example1"
-            class="block w-full p-2  rounded-md border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+            className="block w-full p-2  rounded-md border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
             placeholder="Product description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -126,16 +190,12 @@ export default function Product() {
       </div>
       <div class="mx-auto p-4">
         <div>
-          <label
-            for="example1"
-            class="mb-1 block text-md font-medium text-gray-700 py-2"
-          >
+          <label className="mb-1 block text-md font-medium text-gray-700 py-2">
             Price
           </label>
           <input
             type="number"
-            id="example1"
-            class="block w-full p-2  rounded-md border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+            className="block w-full p-2  rounded-md border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
             placeholder="Product price"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
@@ -143,7 +203,7 @@ export default function Product() {
         </div>
       </div>
 
-      <div class="mx-auto p-4 flex justify-center">
+      <div className="mx-auto p-4 flex justify-center">
         <button
           className="inline-block rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
           type="submit"
