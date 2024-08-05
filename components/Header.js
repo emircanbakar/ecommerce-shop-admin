@@ -15,7 +15,7 @@ export default function Header() {
     return (
       <>
         <header className="border-b border-gray-200 sticky top-0">
-          <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+          <div>
             <div className="flex h-16 items-center justify-between">
               <div className="md:flex md:items-center md:gap-12">
                 <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
@@ -28,7 +28,7 @@ export default function Header() {
                   <ul className="flex items-center gap-6 text-sm">
                     <li>
                       <Link
-                        href="#"
+                        href="/"
                         className={
                           location.pathname === "/" ? active : inactive
                         }
@@ -38,7 +38,7 @@ export default function Header() {
                     </li>
                     <li>
                       <Link
-                        href="#"
+                        href="/products"
                         className={
                           location.pathname === "/products" ? active : inactive
                         }
