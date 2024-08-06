@@ -23,4 +23,18 @@ export default async function handle(req, res) {
   //     res.json(true)
   //   }
   // }
+
+  if (method === "GET") {
+    if (req.query?.id) {
+      res.json(await Product.findById(req.query.id));
+    } else {
+      res.json(await Product.find());
+    }
+  }
+
+  if (method === "PUT") {
+    const { title, description, price, images, _id } = req.body;
+    await Product.updateOne({ _id }, { title, description, price, images });
+    res.json(true)
+  }
 }

@@ -4,14 +4,20 @@ import axios from "axios";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
 
-export default function Product() {
+export default function Product({
+  _id,
+  title: existingTitle,
+  description: existingDescription,
+  price: existingPrice,
+  images: existingImages,
+}) {
   const [redirect, setRedirect] = useState(false);
   const router = useRouter();
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [images, setImages] = useState([]);
+  const [title, setTitle] = useState(existingTitle || "");
+  const [description, setDescription] = useState(existingDescription || "");
+  const [price, setPrice] = useState(existingPrice || "");
+  const [images, setImages] = useState(existingImages || []);
   const [isUploading, setIsUploading] = useState(false);
 
   const uploadImageQueue = [];
@@ -23,7 +29,11 @@ export default function Product() {
     }
 
     const data = { title, description, price, images };
-    await axios.post("/api/products", data);
+    if (_id) {
+      await axios.put("/api/products", { ...data, _id });
+    } else {
+      await axios.post("/api/products", data);
+    }
 
     setRedirect(true);
   }
@@ -59,10 +69,10 @@ export default function Product() {
     setImages(Images);
   }
 
-  function handleDeleteImage(index){
-    const updateImages = [...images]
-    updateImages.splice(index, 1)
-    setImages(updateImages)
+  function handleDeleteImage(index) {
+    const updateImages = [...images];
+    updateImages.splice(index, 1);
+    setImages(updateImages);
   }
 
   return (
@@ -164,7 +174,12 @@ export default function Product() {
                       className="object-cover h-32 w-44 p-2 rounded-md"
                     />
                     <div className="absolute top-2 right-2 cursor-pointer transition-opacity group-hover:opacity-100 opacity-0">
-                        <button onClick={()=> handleDeleteImage(index)} className="p-2 text-center bg-transparent font-bold">X</button>
+                      <button
+                        onClick={() => handleDeleteImage(index)}
+                        className="p-2 text-center bg-transparent font-bold"
+                      >
+                        X
+                      </button>
                     </div>
                   </div>
                 ))}
