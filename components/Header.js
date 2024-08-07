@@ -70,7 +70,7 @@ export default function Header() {
                     </li>
                     <li>
                       <Link
-                        href="#"
+                        href="/settings"
                         className={
                           location.pathname === "/settings" ? active : inactive
                         }
@@ -86,9 +86,7 @@ export default function Header() {
                 <div class="h-10 w-10">
                   <img
                     class="h-full w-full rounded-full object-cover object-center"
-                    src="https://images.unsplash.com/photo-1645378999013-95abebf5f3c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                    // src={session.user.image}
+                    src={session.user.image}
                   />
                 </div>
               </div>
