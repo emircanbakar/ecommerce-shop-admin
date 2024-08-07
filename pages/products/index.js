@@ -39,7 +39,7 @@ export default function Products() {
         </div>
       </header>
 
-      <hr class="my-2 h-px border-0 bg-gray-300" />
+      <hr className="my-2 h-px border-0 bg-gray-300" />
 
       <div className="mx-auto max-w-screen-2xl px-4 py-6 sm:px-6 sm:py-12 lg:px-8">
         {products.length === 0 ? (

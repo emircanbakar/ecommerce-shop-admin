@@ -83,14 +83,12 @@ export default function Product({
       <div className="mx-auto p-4">
         <div>
           <label
-            for="example1"
             className="mb-1 block text-md font-medium text-gray-700 py-2  "
           >
             Title
           </label>
           <input
             type="text"
-            id="example1"
             className="block w-full p-2  rounded-md border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
             placeholder="Product title"
             value={title}
@@ -101,15 +99,14 @@ export default function Product({
       <div className="mx-auto p-4">
         <div>
           <label
-            for="example1"
             className="mb-1 block text-md font-medium text-gray-700 py-2"
           >
             Category
           </label>
           <select className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500">
             <option value="">No category selected</option>
-            <option value="">Option02</option>
-            <option value="">Option03</option>
+            <option value="">Option 1</option>
+            <option value="">Option 2</option>
           </select>
         </div>
       </div>
@@ -206,7 +203,7 @@ export default function Product({
           />
         </div>
       </div>
-      <div class="mx-auto p-4">
+      <div className="mx-auto p-4">
         <div>
           <label className="mb-1 block text-md font-medium text-gray-700 py-2">
             Price

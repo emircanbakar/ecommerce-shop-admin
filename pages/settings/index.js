@@ -18,9 +18,9 @@ export default function Settings() {
             <div className="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
               <div className="sm:flex sm:gap-4 my-4 flex gap-6 items-center">
                 <div className="flex items-center gap-6">
-                  <div class="h-10 w-10">
+                  <div className="h-10 w-10">
                     <img
-                      class="h-full w-full rounded-full object-cover object-center"
+                      className="h-full w-full rounded-full object-cover object-center"
                       alt=""
                       src={session.user.image}
                     />

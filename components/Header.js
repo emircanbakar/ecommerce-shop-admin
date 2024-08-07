@@ -7,8 +7,7 @@ export default function Header() {
   const router = useRouter();
   const { pathname } = router;
 
-  const active =
-    "text-blue-500 transtition hover:text-blue-600 p-2 rounded bg-gray-200";
+  const active = "text-blue-500 transtition hover:text-blue-600 p-2 rounded bg-gray-200";
   const inactive = "text-gray-500";
 
   if (session) {
@@ -83,9 +82,9 @@ export default function Header() {
               </div>
 
               <div className="flex items-center gap-4">
-                <div class="h-10 w-10">
+                <div className="h-10 w-10">
                   <img
-                    class="h-full w-full rounded-full object-cover object-center"
+                    className="h-full w-full rounded-full object-cover object-center"
                     src={session.user.image}
                   />
                 </div>
