@@ -105,8 +105,9 @@ export default function Product({
           </label>
           <select className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500">
             <option value="">No category selected</option>
-            <option value="">Option 1</option>
-            <option value="">Option 2</option>
+            <option value="">Tech</option>
+            <option value="">Clothing</option>
+            <option value="">Other</option>
           </select>
         </div>
       </div>

@@ -13,11 +13,11 @@ export default function Header() {
   if (session) {
     return (
       <>
-        <header className="border-b border-gray-200 sticky top-0">
+        <header className="border-b border-gray-200 sticky top-0 bg-white">
           <div>
             <div className="flex h-16 items-center justify-between">
               <div className="md:flex md:items-center md:gap-12">
-                <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
+                <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
                   NOON-Admin
                 </h1>
               </div>
@@ -45,7 +45,7 @@ export default function Header() {
                         Products
                       </Link>
                     </li>
-                    <li>
+                    {/* <li>
                       <Link
                         href="#"
                         className={
@@ -66,7 +66,7 @@ export default function Header() {
                       >
                         Orders
                       </Link>
-                    </li>
+                    </li> */}
                     <li>
                       <Link
                         href="/settings"
