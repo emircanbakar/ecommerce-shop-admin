@@ -1,5 +1,5 @@
 ## VERCEL DEPLOY
-https://ecommerce-shop-admin-mc1dr92cf-emircans-projects-bbfbf17d.vercel.app
+https://ecommerce-shop-admin-1rgdx953e-emircans-projects-bbfbf17d.vercel.app
 
 ## Getting Started
 
