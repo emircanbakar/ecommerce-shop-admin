@@ -69,7 +69,7 @@ export default function Home() {
         <button
           className="inline-block rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
           href="#"
-          onClick={((res, req) => signIn("google"), console.log(req, res))}
+          onClick={() => signIn("google")}
         >
           Sign in with Google
         </button>
