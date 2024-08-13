@@ -23,7 +23,7 @@ export default function Home() {
               <div className="flex items-center gap-4 mt-4">
                 <Link
                   className="inline-flex items-center justify-center gap-1.5 rounded border border-gray-200 bg-white px-5 py-3 text-gray-900 transition hover:text-gray-700 focus:outline-none focus:ring"
-                  href={'/products'}
+                  href={"/products"}
                 >
                   <span className="text-sm font-medium"> View Products </span>
                   <svg
@@ -69,7 +69,7 @@ export default function Home() {
         <button
           className="inline-block rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
           href="#"
-          onClick={(res, req) =>  console.log(signIn("google"), res, req)}
+          onClick={((res, req) => signIn("google"), console.log(req, res))}
         >
           Sign in with Google
         </button>
